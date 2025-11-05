@@ -55,7 +55,7 @@ console.log(condition)
     dateCount.innerHTML = todayDate;
     console.log(todayDate)
     
-    document.getElementById('temp').innerHTML=`${current.temperature}`
+    document.getElementById('temp').innerHTML=`${current.temperature}°`
     
     reverseGeocode(lat,lon)
   }).catch((error) => console.log(error))

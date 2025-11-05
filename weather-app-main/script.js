@@ -1,16 +1,16 @@
 
 const weatherConditions = {
-  0: { name: "Clear sky", icon: "sunny.png" },
-  1: { name: "Mainly clear", icon: "sunny.png" },
+  0: { name: "Clear sky", icon: "icon-sunny.webp" },
+  1: { name: "Mainly clear", icon: "icon-icon-webp" },
   2: { name: "Partly cloudy", icon: "icon-partly-cloudy.webp" },
-  3: { name: "Overcast", icon: "cloudy.png" },
-  45: { name: "Foggy", icon: "fog.png" },
+  3: { name: "Overcast", icon: "icon-overcast.webp" },
+  45: { name: "Foggy", icon: "icon-fog.webp" },
   48: { name: "Depositing rime fog", icon: "fog.png" },
-  51: { name: "Light drizzle", icon: "drizzle.png" },
-  61: { name: "Slight rain", icon: "rain.png" },
-  63: { name: "Moderate rain", icon: "rain.png" },
+  51: { name: "Light drizzle", icon: "icon-drizzle.webp" },
+  61: { name: "Slight rain", icon: "icon-rain.webp" },
+  63: { name: "Moderate rain", icon: "icon-rain.webp" },
   65: { name: "Heavy rain", icon: "rain.png" },
-  71: { name: "Slight snow", icon: "snow.png" },
+  71: { name: "Slight snow", icon: "icon-snow.webp" },
   80: { name: "Rain showers", icon: "rain.png" },
   95: { name: "Thunderstorm", icon: "thunder.png" },
 };
@@ -55,7 +55,7 @@ console.log(condition)
     dateCount.innerHTML = todayDate;
     console.log(todayDate)
     
-    document.getElementById('temp').innerHTML=`${current.temperature}°C`
+    document.getElementById('temp').innerHTML=`${current.temperature}`
     
     reverseGeocode(lat,lon)
   }).catch((error) => console.log(error))

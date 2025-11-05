@@ -42,6 +42,8 @@ const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude
     const current = data.current_weather;
     const condition=weatherConditions[current.weathercode] || { name: "Unknown", icon: "unknown.png" };
 document.getElementById('icon').src=`assets/images/${condition.icon}`;
+document.getElementById('icon').alt=`assets/images/${condition.name}`;
+
 console.log(condition)
     const dateCount = document.getElementById('date');
     const todayDate = new Date(current.time).toLocaleDateString("en-US", {
@@ -54,9 +56,25 @@ console.log(condition)
     console.log(todayDate)
     
     document.getElementById('temp').innerHTML=`${current.temperature}°C`
+    
+    reverseGeocode(lat,lon)
   }).catch((error) => console.log(error))
 }
 
+// === Reverse geocode to get city & country ===
+function reverseGeocode(lat, lon) {
+  const geoUrl = `https://geocoding-api.open-meteo.com/v1/reverse?latitude=${lat}&longitude=${lon}`;
 
+  fetch(geoUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      const place = data.results?.[0];
+      if (place) {
+        document.getElementById("location").innerText = `${place.name}, ${place.country}`;
+      }
+    })
+    .catch((error) => console.log("Could not fetch location name.",error));
+
+}
 
 //getWeather(6.5244, 3.3792, true); // Lagos coordinates

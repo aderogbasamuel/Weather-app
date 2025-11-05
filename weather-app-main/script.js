@@ -132,8 +132,8 @@ async function getWeather(lat, lon, fromLocation = false) {
     // 🔹 Get extra weather info
     const feelsLike =
       current.apparent_temperature[index] ?? current.temperature ?? "--";
-    const humidity = current.relative_humidity_2m[index] ?? "--";
-    const precipitation = current.precipitation[index] ?? "--";
+    const humidity = current.relative_humidity_2m ?? "--";
+    const precipitation = current.precipitation ?? "--";
     const windSpeed = current.windspeed ?? "--";
 
     // 🔹 Update UI

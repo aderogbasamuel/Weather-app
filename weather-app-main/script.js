@@ -118,8 +118,7 @@ async function getWeather(lat, lon, fromLocation = false) {
     });
     dateCount.textContent = todayDate;
        // find the latest hour in hourly data
-   const now = new Date().toISOString().slice(0, 13);
-   const index = data.hourly.time.findIndex((t) => t.slice(0, 13) === now);
+   const index= new Date().getHours();
    
    // fallback if index not found
    const feelsLike = data.hourly.apparent_temperature[index] ?? "--";
@@ -127,16 +126,16 @@ async function getWeather(lat, lon, fromLocation = false) {
    const precipitation = data.hourly.precipitation[index] ?? "--";
    
    // Update the UI
-   document.getElementById("feels_temp").textContent = `${feelsLike}°`;
-   document.getElementById("humidity").textContent = `${humidity}%`;
-   document.getElementById("windspead").textContent = `${windSpeed} km/h`;
-   document.getElementById("precipitation").textContent = `${precipitation} mm`;
+   document.getElementById("feels_temp").innerHTML = `${feelsLike}°`;
+   document.getElementById("feels_temp").innerHTML = `${humidity}%`;
+   document.getElementById("windspead").innerHTML = `${windSpeed} km/h`;
+   document.getElementById("precipitation").innerHTML = `${precipitation} mm`;
    
-   log("Weather data updated successfully!");
+   alert("Weather data updated successfully!");
     
     reverseGeocode(lat, lon);
   } catch (error) {
-    console.error("Weather fetch failed:", error);
+    alert.error("Weather fetch failed:", error);
   }
 }
 // === Reverse geocode to get city & country =

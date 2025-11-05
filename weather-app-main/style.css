@@ -32,6 +32,7 @@ body{
   font-size: 18px;
   background: var(--neutral-900);
   font-family: dmSans;
+  padding: 18px;
 }
 header nav{
   color: white;
@@ -49,7 +50,7 @@ header nav h1{
   
 }
 form{
-    padding: 20px 18px;
+    padding: 20px 0;
 
 }
 .search{
@@ -86,8 +87,42 @@ margin-top: 15px;
 .weatherCard{
   background: var(--blue-500);
   color: #fff;
-  padding: 20px;
+  padding: 30px 20px;
+  background-image: url(assets/images/bg-today-small.svg);
+  background-position: center;
+  background-size: cover;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.weatherCard .header{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .weatherCard #date{
   color: #fff;
+  color: var(--neutral-200);
+  margin: 8px 0;
+  
+}
+.weatherCard #location{
+  font-family: dmSans;
+  font-weight: 600;
+  font-size: 30px;
+  margin: 10px 0;
+}
+.weatherCard .weatherInfo{
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+  justify-content: space-between;
+  padding: 0 20px;
+  width: 100%;
+}
+.weatherCard .weatherInfo #temp{
+  font-size: 80px;
+  font-style: italic;
+  font-weight: 600;
 }

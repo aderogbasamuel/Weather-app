@@ -117,8 +117,22 @@ async function getWeather(lat, lon, fromLocation = false) {
       day: "numeric",
     });
     dateCount.textContent = todayDate;
-    const currentHour= new Date().getHours();
-    document.getElementById('feels_temp').innerHTML=data.hourly.apparent_temperature[currentHour];
+       // find the latest hour in hourly data
+   const now = new Date().toISOString().slice(0, 13);
+   const index = data.hourly.time.findIndex((t) => t.slice(0, 13) === now);
+   
+   // fallback if index not found
+   const feelsLike = data.hourly.apparent_temperature[index] ?? "--";
+   const humidity = data.hourly.relative_humidity_2m[index] ?? "--";
+   const precipitation = data.hourly.precipitation[index] ?? "--";
+   
+   // Update the UI
+   document.getElementById("feels_temp").textContent = `${feelsLike}°`;
+   document.getElementById("humidity").textContent = `${humidity}%`;
+   document.getElementById("windspead").textContent = `${windSpeed} km/h`;
+   document.getElementById("precipitation").textContent = `${precipitation} mm`;
+   
+   log("Weather data updated successfully!");
     
     reverseGeocode(lat, lon);
   } catch (error) {

@@ -175,7 +175,7 @@ margin-top: 15px;
   font-size: 18px;
   color: var(--neutral-200);
 }
-.details .card #feels_temp{
+.details .card .stats{
   font-size: 36px;
   font-weight: 300;
   margin-top: 20px;

@@ -118,7 +118,7 @@ margin-top: 15px;
   align-items: center;
   margin-top: 5px;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 0 5px;
   width: 100%;
 }
 .weatherCard .weatherInfo #temp{

@@ -14,9 +14,7 @@ const weatherConditions = {
   95: { name: "Thunderstorm", icon: "thunder.png" },
 };
 
-window.addEventListener('load', getUserLocation)
-
-
+window.addEventListener('DOMContentLoaded', getUserLocation);
 function getUserLocation() {
   // Tab to edit
   if (navigator.geolocation) {
@@ -93,7 +91,7 @@ function getWeather(lat, lon, fromLocation = false) {
 }*/
 async function getWeather(lat, lon, fromLocation = false) {
   try {
-    const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,apparent_temperature,humidity,precipitation,wind_speed,weathercode&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`;
+    const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,apparent_temperature,relative_humidity_2m,precipitation,wind_speed_10m,weathercode&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`;
     const response = await fetch(apiUrl);
     const data = await response.json();
     
@@ -144,3 +142,5 @@ function reverseGeocode(lat, lon) {
     );
 }
 //getWeather(6.5244, 3.3792, true); // Lagos coordinates
+
+getUserLocation();

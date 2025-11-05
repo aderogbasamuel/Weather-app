@@ -92,9 +92,11 @@ function getWeather(lat, lon, fromLocation = false) {
 async function getWeather(lat, lon, fromLocation = false) {
   try {
     const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,apparent_temperature,relative_humidity_2m,precipitation,wind_speed_10m,weathercode&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`;
+
+
+    
     const response = await fetch(apiUrl);
     const data = await response.json();
-
     const current = data.current_weather;
     if (!current) throw new Error("No current weather data found.");
 
@@ -129,9 +131,9 @@ async function getWeather(lat, lon, fromLocation = false) {
 
     // 🔹 Get extra weather info
     const feelsLike =
-      data.hourly.apparent_temperature[index] ?? current.temperature ?? "--";
-    const humidity = data.hourly.relative_humidity_2m[index] ?? "--";
-    const precipitation = data.hourly.precipitation[index] ?? "--";
+      current.apparent_temperature[index] ?? current.temperature ?? "--";
+    const humidity = current.relative_humidity_2m[index] ?? "--";
+    const precipitation = current.precipitation[index] ?? "--";
     const windSpeed = current.windspeed ?? "--";
 
     // 🔹 Update UI

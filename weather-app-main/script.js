@@ -14,9 +14,7 @@ const weatherConditions = {
   95: { name: "Thunderstorm", icon: "thunder.png" },
 };
 
-window.addEventListener('load', getUserLocation)
-
-
+window.addEventListener('DOMContentLoaded', getUserLocation);
 function getUserLocation() {
   // Tab to edit
   if (navigator.geolocation) {
@@ -93,7 +91,7 @@ function getWeather(lat, lon, fromLocation = false) {
 }*/
 async function getWeather(lat, lon, fromLocation = false) {
   try {
-    const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,weathercode&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`;
+    const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,apparent_temperature,relative_humidity_2m,precipitation,wind_speed_10m,weathercode&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`;
     const response = await fetch(apiUrl);
     const data = await response.json();
     
@@ -102,8 +100,8 @@ async function getWeather(lat, lon, fromLocation = false) {
     
     const condition = weatherConditions[current.weathercode] || { name: "Unknown", icon: "unknown.png" };
     
-    //showWeatherEffect(current.weathercode);
-    showWeatherEffect(61)
+    showWeatherEffect(current.weathercode);
+   // showWeatherEffect(61)
     
     const iconEl = document.getElementById('icon');
     iconEl.src = `assets/images/${condition.icon}`;
@@ -119,6 +117,8 @@ async function getWeather(lat, lon, fromLocation = false) {
       day: "numeric",
     });
     dateCount.textContent = todayDate;
+    const currentHour= new Date().getHours();
+    document.getElementById('feels_temp').innerHTML=data.hourly.apparent_temperature[currentHour];
     
     reverseGeocode(lat, lon);
   } catch (error) {
@@ -142,3 +142,5 @@ function reverseGeocode(lat, lon) {
     );
 }
 //getWeather(6.5244, 3.3792, true); // Lagos coordinates
+
+getUserLocation();

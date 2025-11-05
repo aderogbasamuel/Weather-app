@@ -63,18 +63,16 @@ console.log(condition)
 
 // === Reverse geocode to get city & country ===
 function reverseGeocode(lat, lon) {
-  const geoUrl = `https://geocoding-api.open-meteo.com/v1/reverse?latitude=${lat}&longitude=${lon}`;
+  const geoUrl = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`;
 
   fetch(geoUrl)
-    .then((response) => response.json())
-    .then((data) => {
-      const place = data.results?.[0];
-      if (place) {
-        document.getElementById("location").innerText = `${place.name}, ${place.country}`;
-      }
+    .then(response => response.json())
+    .then(data => {
+      const city = data.city || data.locality || "Unknown City";
+      const country = data.countryName || "Unknown Country";
+      document.getElementById("location").innerText = `${city}, ${country}`;
+      console.log(`${city}, ${country}`);
     })
-    .catch((error) => console.log("Could not fetch location name.",error));
-
+    .catch(error => console.log("Could not fetch location name.", error));
 }
-
 //getWeather(6.5244, 3.3792, true); // Lagos coordinates

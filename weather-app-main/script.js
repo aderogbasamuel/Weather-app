@@ -1,4 +1,3 @@
-
 const weatherConditions = {
   0: { name: "Clear sky", icon: "icon-sunny.webp" },
   1: { name: "Mainly clear", icon: "icon-icon-webp" },
@@ -15,7 +14,8 @@ const weatherConditions = {
   95: { name: "Thunderstorm", icon: "thunder.png" },
 };
 
-window.onload = getUserLocation
+window.addEventListener('load', getUserLocation)
+
 
 function getUserLocation() {
   // Tab to edit
@@ -30,21 +30,52 @@ function getUserLocation() {
         console.log(error)
       }
     )
-  }else{
+  } else {
     alert('not found')
   }
 }
 
+function showWeatherEffect(condition) {
+  // Select all elements that have the 'weatherBg' class, even if they have multiple classes
+  const elements = document.querySelectorAll('.weatherBg');
+  
+  // Hide all weather elements
+  elements.forEach(el => el.classList.remove('active'));
+  
+  console.log(condition);
+  
+  // Map conditions to element IDs
+  const weatherMap = {
+    sunny: [0, 1],
+    rainy: [61, 63, 65, 80],
+    snowy: [71, 73, 75]
+  };
+  
+  // Find the target element ID
+  let targetId = 'cloudy'; // default fallback
+  for (const [key, values] of Object.entries(weatherMap)) {
+    if (values.includes(condition)) {
+      targetId = key;
+      break;
+    }
+  }
+  
+  // Add 'active' class to the target element
+  const target = document.getElementById(targetId);
+  if (target) target.classList.add('active');
+}
 
+/*
 function getWeather(lat, lon, fromLocation = false) {
-const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,weathercode&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`;
+  const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,weathercode&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`;
   fetch(apiUrl).then((response) => response.json()).then((data) => {
     const current = data.current_weather;
-    const condition=weatherConditions[current.weathercode] || { name: "Unknown", icon: "unknown.png" };
-document.getElementById('icon').src=`assets/images/${condition.icon}`;
-document.getElementById('icon').alt=`assets/images/${condition.name}`;
-
-console.log(condition)
+    const condition = weatherConditions[current.weathercode] || { name: "Unknown", icon: "unknown.png" };
+    showWeatherEffect(current.weathercode);
+    document.getElementById('icon').src = `assets/images/${condition.icon}`;
+    document.getElementById('icon').alt = `assets/images/${condition.name}`;
+    
+    console.log(condition)
     const dateCount = document.getElementById('date');
     const todayDate = new Date(current.time).toLocaleDateString("en-US", {
       weekday: "long",
@@ -55,16 +86,49 @@ console.log(condition)
     dateCount.innerHTML = todayDate;
     console.log(todayDate)
     
-    document.getElementById('temp').innerHTML=`${current.temperature}°`
+    document.getElementById('temp').innerHTML = `${current.temperature}°`
     
-    reverseGeocode(lat,lon)
+    reverseGeocode(lat, lon)
   }).catch((error) => console.log(error))
+}*/
+async function getWeather(lat, lon, fromLocation = false) {
+  try {
+    const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,weathercode&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`;
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+    
+    const current = data.current_weather;
+    if (!current) throw new Error("No current weather data found.");
+    
+    const condition = weatherConditions[current.weathercode] || { name: "Unknown", icon: "unknown.png" };
+    
+    //showWeatherEffect(current.weathercode);
+    showWeatherEffect(61)
+    
+    const iconEl = document.getElementById('icon');
+    iconEl.src = `assets/images/${condition.icon}`;
+    iconEl.alt = condition.name;
+    
+    document.getElementById('temp').textContent = `${current.temperature}°`;
+    
+    const dateCount = document.getElementById('date');
+    const todayDate = new Date(current.time).toLocaleDateString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+    dateCount.textContent = todayDate;
+    
+    reverseGeocode(lat, lon);
+  } catch (error) {
+    console.error("Weather fetch failed:", error);
+  }
 }
-
 // === Reverse geocode to get city & country =
 function reverseGeocode(lat, lon) {
   const geoUrl = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`;
-
+  
   fetch(geoUrl)
     .then((response) => response.json())
     .then((data) => {

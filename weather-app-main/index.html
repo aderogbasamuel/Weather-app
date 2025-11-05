@@ -1,111 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
-
+  
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
   
   <title>Frontend Mentor | Weather app</title>
-<link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css">
   <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    .attribution { font-size: 11px; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
+    .attribution {
+      font-size: 11px;
+      text-align: center;
+    }
+    
+    .attribution a {
+      color: hsl(228, 45%, 44%);
+    }
   </style>
+  <link rel="stylesheet" href="stars.css">
+  <link rel="stylesheet" href="css/rain.css">
+  <link rel="stylesheet" href="css/sunny.css">
 </head>
-<body>
 
-<div>
-  <header class="">
-    <nav class="">
-      <h1 class="">Weather Know</h1>
-      <div>
-        
+<body>
+  <div class="bg">
+    
+    <div class=" bg-animation weatherBg" id="snowy">
+      <div id='stars'></div>
+      <div id='stars2'></div>
+      <div id='stars3'></div>
+      <div id='stars4'></div>
+    </div>
+    <div class=" rain-container weatherBg" id="rainy">
+    </div>
+    <div id="sunny" class="weatherBg">
+      <div id="sun"></div>
+      <div id="clouds"></div>
+    </div>
+    <!-- <div id="rainy">
+      <div id="moon">
+        <div class="crater"></div>
+        <div class="crater"></div>
+        <div class="crater"></div>
+        <div class="crater"></div>
       </div>
-    </nav>
-    <h1 class="hero">  How's the sky looking today?</h1>
+      <div id="rain"></div>
+    </div>-->
+    <!-- / STAR ANIMATION -->
+    
+  </div>
+  <div class="body">
+    <header class="">
+      <nav class="">
+        <h1 class="">Weather Know</h1>
+        <div>
+          
+        </div>
+      </nav>
+      <h1 class="hero"> How's the sky looking today?</h1>
       <form action="" method="get" accept-charset="utf-8">
         
-  <div class="search">
-   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-search" viewBox="0 0 16 16">
-    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-    </svg>
-    <input type="text" name="" id="input" value="" placeholder="Search for a place"/>
-  </div>
-  <button type="submit" class="searchBtn">Search</button>
-        </form>
-
-  </header>
-  <div class="weatherCard">
-    <div class="header">
-      <div id="location">
-        Lagos,Nigeria
+        <div class="search">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-search" viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+          </svg>
+          <input type="text" name="" id="input" value="" placeholder="Search for a place" />
+        </div>
+        <button type="submit" class="searchBtn">Search</button>
+      </form>
+      
+    </header>
+    <div class="weatherCard">
+      <div class="header">
+        <div id="location">
+          Lagos,Nigeria
+        </div>
+        <div id="date">
+          Tuesday Aug 3025
+        </div>
       </div>
-      <div id="date">
-       Tuesday Aug 3025
+      <div class="weatherInfo">
+        <img id="icon" width="80" height="80" />
+        <div id="temp">
+          20°
+        </div>
       </div>
     </div>
-    <div class="weatherInfo">
-      <img id="icon" width="80" height="80"/>
-      <div id="temp">
-        20°
-      </div>
-    </div>
   </div>
-</div>
-
-
+  
+  
   Units
-
+  
   Switch to Imperial/Metric
-
+  
   Temperature
-
+  
   Celsius (°C)
   Fahrenheit (°F)
-
+  
   Wind Speed
-
+  
   km/h
   mph
-
+  
   Precipitation
-
+  
   Millimeters (mm)
   Inches (in)
-
+  
   How's the sky looking today?
-
+  
   Search for a city, e.g., New York
   Search
-
+  
   Feels like
   <!-- Insert temperature here -->
-
+  
   Humidity
   <!-- Insert humidity here -->
-
+  
   Wind
-  <!-- Insert wind here -->   
+  <!-- Insert wind here -->
   
   Precipitation
   <!-- Insert precipitation here -->
-
+  
   Daily forecast
   <!-- Insert daily forecast for the next 7 days here -->
-
+  
   Hourly forecast
   <!-- Insert hourly forecast for the selected day here -->
-<div id="map">
-  
-</div>
+  <div id="map">
+    
+  </div>
   <div class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>. 
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>.
     Coded by <a href="#">devdrogba</a>.
   </div>
 </body>
 <script src="script.js"></script>
+<script src="js/rain.js" type="text/javascript" charset="utf-8"></script>
+
+<script src="js/sunny.js">
+  js / sunny.js
+</script>
+
 </html>

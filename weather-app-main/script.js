@@ -135,7 +135,7 @@ async function getWeather(lat, lon, fromLocation = false) {
     
     reverseGeocode(lat, lon);
   } catch (error) {
-    alert.error("Weather fetch failed:", error);
+    alert("Weather fetch failed:", error);
   }
 }
 // === Reverse geocode to get city & country =

@@ -38,6 +38,7 @@ body{
   padding: 18px;
   position: relative;
   z-index: 19;
+  color: #fff;
 }
 
 .bg {
@@ -68,6 +69,7 @@ header nav{
 header nav h1{
   font-size: 18px;
   padding: 24px 24px;
+  font-family: secondaryFont;
 }
 
 .hero{
@@ -155,4 +157,26 @@ margin-top: 15px;
   font-size: 80px;
   font-style: italic;
   font-weight: 600;
+}
+
+.details{
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+.details .card{
+  background: var(--neutral-800);
+  border: 1.5px solid var(--neutral-600);
+  border-radius: 10px;
+  padding: 20px 15px;
+}
+.details .card .head{
+  font-size: 18px;
+  color: var(--neutral-200);
+}
+.details .card #feels_temp{
+  font-size: 36px;
+  font-weight: 300;
+  margin-top: 20px;
 }

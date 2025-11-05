@@ -119,6 +119,8 @@ async function getWeather(lat, lon, fromLocation = false) {
       day: "numeric",
     });
     dateCount.textContent = todayDate;
+    const currentHour= new Date().getHours;
+    document.getElementById('feels_temp').innerHTML=data.hourly.apparent_temperature[currentHour];
     
     reverseGeocode(lat, lon);
   } catch (error) {

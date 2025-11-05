@@ -94,22 +94,27 @@ async function getWeather(lat, lon, fromLocation = false) {
     const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,apparent_temperature,relative_humidity_2m,precipitation,wind_speed_10m,weathercode&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`;
     const response = await fetch(apiUrl);
     const data = await response.json();
-    
+
     const current = data.current_weather;
     if (!current) throw new Error("No current weather data found.");
-    
-    const condition = weatherConditions[current.weathercode] || { name: "Unknown", icon: "unknown.png" };
-    
+
+    const condition =
+      weatherConditions[current.weathercode] || {
+        name: "Unknown",
+        icon: "unknown.png",
+      };
+
+    // 🔹 Show background animation
     showWeatherEffect(current.weathercode);
-   // showWeatherEffect(61)
-    
-    const iconEl = document.getElementById('icon');
+
+    // 🔹 Set weather icon + temp
+    const iconEl = document.getElementById("icon");
     iconEl.src = `assets/images/${condition.icon}`;
     iconEl.alt = condition.name;
-    
-    document.getElementById('temp').textContent = `${current.temperature}°`;
-    
-    const dateCount = document.getElementById('date');
+    document.getElementById("temp").textContent = `${current.temperature}°`;
+
+    // 🔹 Show date
+    const dateCount = document.getElementById("date");
     const todayDate = new Date(current.time).toLocaleDateString("en-US", {
       weekday: "long",
       year: "numeric",
@@ -117,25 +122,29 @@ async function getWeather(lat, lon, fromLocation = false) {
       day: "numeric",
     });
     dateCount.textContent = todayDate;
-       // find the latest hour in hourly data
-   const index= new Date().getHours();
-   
-   // fallback if index not found
-   const feelsLike = data.hourly.apparent_temperature[index] ?? "--";
-   const humidity = data.hourly.relative_humidity_2m[index] ?? "--";
-   const precipitation = data.hourly.precipitation[index] ?? "--";
-   
-   // Update the UI
-   document.getElementById("feels_temp").innerHTML = `${feelsLike}°`;
-   document.getElementById("feels_temp").innerHTML = `${humidity}%`;
-   document.getElementById("windspead").innerHTML = `${windSpeed} km/h`;
-   document.getElementById("precipitation").innerHTML = `${precipitation} mm`;
-   
-   alert("Weather data updated successfully!");
-    
+
+    // 🔹 Find correct hour index
+    const now = new Date().toISOString().slice(0, 13);
+    const index = data.hourly.time.findIndex((t) => t.slice(0, 13) === now);
+
+    // 🔹 Get extra weather info
+    const feelsLike =
+      data.hourly.apparent_temperature[index] ?? current.temperature ?? "--";
+    const humidity = data.hourly.relative_humidity_2m[index] ?? "--";
+    const precipitation = data.hourly.precipitation[index] ?? "--";
+    const windSpeed = current.windspeed ?? "--";
+
+    // 🔹 Update UI
+    document.getElementById("feels_temp").textContent = `${feelsLike}°`;
+    document.getElementById("humidity").textContent = `${humidity}%`;
+    document.getElementById("windspead").textContent = `${windSpeed} km/h`;
+    document.getElementById("precipitation").textContent = `${precipitation} mm`;
+
+    console.log("Weather data updated successfully!");
+
     reverseGeocode(lat, lon);
   } catch (error) {
-    alert("Weather fetch failed:", error);
+    console.error("Weather fetch failed:", error);
   }
 }
 // === Reverse geocode to get city & country =

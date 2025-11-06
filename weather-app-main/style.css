@@ -37,7 +37,7 @@ body{
   font-family: dmSans;
   padding: 18px;
   position: relative;
-  z-index: 19;
+z-index: 5;
   color: #fff;
 }
 
@@ -46,6 +46,8 @@ body{
   width: 100vw;
   position: fixed;
   background-size: 20px 20px;
+  z-index: 10;
+  pointer-events: none;
 /*  background-color: var(--bg);
   transition: var(--transition);
   background-image: radial-gradient(#FFFFFFBF 0.35px, transparent 0.35px);*/
@@ -170,6 +172,8 @@ margin-top: 15px;
   border: 1.5px solid var(--neutral-600);
   border-radius: 10px;
   padding: 20px 15px;
+  position: relative;
+  z-index: 20 !important;
 }
 .details .card .head{
   font-size: 18px;

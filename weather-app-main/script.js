@@ -44,7 +44,7 @@ function showWeatherEffect(condition) {
 
   // Map conditions to element IDs
   const weatherMap = {
-    sunny: [0, 1],
+    sunny: [0, 1, ],
     rainy: [61, 63, 65, 80],
     snowy: [71, 73, 75]
   };

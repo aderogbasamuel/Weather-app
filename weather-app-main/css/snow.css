@@ -1,0 +1,47 @@
+#snowy {
+  margin: 0;
+  padding: 0;
+  /* background-color: #002233; */
+  overflow: hidden;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  z-index: -10;
+}
+
+/* Snowflake base style */
+.snowflake {
+  position: fixed;
+  top: -50px;
+  color: white;
+  font-size: 1em;
+  opacity: 0.8;
+  pointer-events: none;
+  user-select: none;
+  animation: fall linear infinite;
+  z-index: 0;
+}
+
+/* Falling animation with slight drift */
+@keyframes fall {
+  to {
+    transform: translateX(var(--horizontal-drift)) translateY(100vh)
+      rotate(var(--rotation));
+  }
+}
+
+/* Lens flare effect style */
+.flare {
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.7))
+    drop-shadow(0 0 12px rgba(255, 255, 255, 0.5));
+}
+
+/* Blurred snowflake for depth */
+.blurred {
+  filter: blur(2px);
+  opacity: 0.5;
+}

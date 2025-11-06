@@ -19,11 +19,11 @@ function getUserLocation() {
   // Tab to edit
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition((position) => {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
-        getWeather(lat, lon, true)
-        console.log(lon)
-      },
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      getWeather(lat, lon, true)
+      console.log(lon)
+    },
       (error) => {
         console.log(error)
       }
@@ -36,19 +36,19 @@ function getUserLocation() {
 function showWeatherEffect(condition) {
   // Select all elements that have the 'weatherBg' class, even if they have multiple classes
   const elements = document.querySelectorAll('.weatherBg');
-  
+
   // Hide all weather elements
   elements.forEach(el => el.classList.remove('active'));
-  
+
   console.log(condition);
-  
+
   // Map conditions to element IDs
   const weatherMap = {
     sunny: [0, 1],
     rainy: [61, 63, 65, 80],
     snowy: [71, 73, 75]
   };
-  
+
   // Find the target element ID
   let targetId = 'cloudy'; // default fallback
   for (const [key, values] of Object.entries(weatherMap)) {
@@ -57,7 +57,7 @@ function showWeatherEffect(condition) {
       break;
     }
   }
-  
+
   // Add 'active' class to the target element
   const target = document.getElementById(targetId);
   if (target) target.classList.add('active');
@@ -91,13 +91,14 @@ function getWeather(lat, lon, fromLocation = false) {
 }*/
 async function getWeather(lat, lon, fromLocation = false) {
   try {
-    const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,apparent_temperature,relative_humidity_2m,precipitation,wind_speed_10m,weathercode&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`;
+    // const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,apparent_temperature,relative_humidity_2m,precipitation,wind_speed_10m,weathercode&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`;
+    const apiUrl = "https://api.open-meteo.com/v1/forecast?latitude=6.5244&longitude=8.3792&current=temperature_2m,apparent_temperature,relative_humidity_2m,precipitation,wind_speed_10m,weathercode&timezone=auto"
 
 
-    
     const response = await fetch(apiUrl);
     const data = await response.json();
-    const current = data.current_weather;
+    console.log(data)
+    const current = data.current;
     if (!current) throw new Error("No current weather data found.");
 
     const condition =
@@ -113,7 +114,7 @@ async function getWeather(lat, lon, fromLocation = false) {
     const iconEl = document.getElementById("icon");
     iconEl.src = `assets/images/${condition.icon}`;
     iconEl.alt = condition.name;
-    document.getElementById("temp").textContent = `${current.temperature}°`;
+    document.getElementById("temp").textContent = `${current.temperature_2m}°`;
 
     // 🔹 Show date
     const dateCount = document.getElementById("date");
@@ -130,14 +131,14 @@ async function getWeather(lat, lon, fromLocation = false) {
     const humidity = current.relative_humidity_2m;
     const precipitation = current.precipitation;
     const wind = current.wind_speed_10m;
-
-    document.getElementById('feelsLike').textContent = feelsLike ? `${feelsLike}°` : '--';
+    console.log(feelsLike, humidity, precipitation, wind)
+    document.getElementById('feels_like').textContent = feelsLike ? `${feelsLike}°` : '--';
     document.getElementById('humidity').textContent = humidity ? `${humidity}%` : '--';
-    document.getElementById('precipitation').textContent = precipitation ? `${precipitation} mm` : '--';
-    document.getElementById('wind').textContent = wind ? `${wind} km/h` : '--';
-  
+    document.getElementById('precipitation').textContent = `${precipitation} mm` ?? "--";
+    document.getElementById('windspeed').textContent = wind ? `${wind} km/h` : '--';
+
     // 🔹 Update UI
-   
+    console.log(current)
     console.log("Weather data updated successfully!");
 
     reverseGeocode(lat, lon);
@@ -148,7 +149,7 @@ async function getWeather(lat, lon, fromLocation = false) {
 // === Reverse geocode to get city & country =
 function reverseGeocode(lat, lon) {
   const geoUrl = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`;
-  
+
   fetch(geoUrl)
     .then((response) => response.json())
     .then((data) => {

@@ -126,22 +126,18 @@ async function getWeather(lat, lon, fromLocation = false) {
     dateCount.textContent = todayDate;
 
     // 🔹 Find correct hour index
-    const now = new Date().toISOString().slice(0, 13);
-    const index = data.hourly.time.findIndex((t) => t.slice(0, 13) === now);
+    const feelsLike = current.apparent_temperature;
+    const humidity = current.relative_humidity_2m;
+    const precipitation = current.precipitation;
+    const wind = current.wind_speed_10m;
 
-    // 🔹 Get extra weather info
-    const feelsLike =
-      current.apparent_temperature[index] ?? current.temperature ?? "--";
-    const humidity = current.relative_humidity_2m ?? "--";
-    const precipitation = current.precipitation ?? "--";
-    const windSpeed = current.windspeed ?? "--";
-
+    document.getElementById('feelsLike').textContent = feelsLike ? `${feelsLike}°` : '--';
+    document.getElementById('humidity').textContent = humidity ? `${humidity}%` : '--';
+    document.getElementById('precipitation').textContent = precipitation ? `${precipitation} mm` : '--';
+    document.getElementById('wind').textContent = wind ? `${wind} km/h` : '--';
+  
     // 🔹 Update UI
-    document.getElementById("feels_temp").textContent = `${feelsLike}°`;
-    document.getElementById("humidity").textContent = `${humidity}%`;
-    document.getElementById("windspead").textContent = `${windSpeed} km/h`;
-    document.getElementById("precipitation").textContent = `${precipitation} mm`;
-
+   
     console.log("Weather data updated successfully!");
 
     reverseGeocode(lat, lon);
@@ -167,4 +163,3 @@ function reverseGeocode(lat, lon) {
 }
 //getWeather(6.5244, 3.3792, true); // Lagos coordinates
 
-getUserLocation();

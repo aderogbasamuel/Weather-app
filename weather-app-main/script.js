@@ -1,6 +1,6 @@
 const weatherConditions = {
   0: { name: "Clear sky", icon: "icon-sunny.webp" },
-  1: { name: "Mainly clear", icon: "icon-icon-webp" },
+  1: { name: "Mainly clear", icon: "icon-sunny.webp" },
   2: { name: "Partly cloudy", icon: "icon-partly-cloudy.webp" },
   3: { name: "Overcast", icon: "icon-overcast.webp" },
   45: { name: "Foggy", icon: "icon-fog.webp" },
@@ -8,10 +8,10 @@ const weatherConditions = {
   51: { name: "Light drizzle", icon: "icon-drizzle.webp" },
   61: { name: "Slight rain", icon: "icon-rain.webp" },
   63: { name: "Moderate rain", icon: "icon-rain.webp" },
-  65: { name: "Heavy rain", icon: "rain.png" },
+  65: { name: "Heavy rain", icon: "icon-storm.webp" },
   71: { name: "Slight snow", icon: "icon-snow.webp" },
-  80: { name: "Rain showers", icon: "rain.png" },
-  95: { name: "Thunderstorm", icon: "thunder.png" },
+  80: { name: "Rain showers", icon: "icon-storm.webp" },
+  95: { name: "Thunderstorm", icon: "icon-storm.webp" },
 };
 
 window.addEventListener('DOMContentLoaded', getUserLocation);
